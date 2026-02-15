@@ -7,18 +7,21 @@ import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component
 public class TransacaoStorage {
 
     private static List<Transacao> transacoes = new ArrayList<Transacao>();
+    private static final Logger logger = LoggerFactory.getLogger(TransacaoStorage.class);
 
     public static void addTransacao(Transacao transacao) {
         transacoes.add(transacao);
     }
 
-    public static void clear() {
+    public static void clearTransacoes() {
         transacoes.clear();
     }
 
