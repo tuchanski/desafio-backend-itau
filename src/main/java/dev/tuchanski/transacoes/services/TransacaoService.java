@@ -9,7 +9,6 @@ import dev.tuchanski.transacoes.storage.TransacaoStorage;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
-import java.util.List;
 
 @Service
 public class TransacaoService {
