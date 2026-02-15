@@ -27,7 +27,7 @@ public class TransacaoStorage {
 
     public static List<Transacao> retrieveUltimoMinuto() {
         OffsetDateTime agora = OffsetDateTime.now();
-        OffsetDateTime umMinAtras = agora.minus(1, ChronoUnit.MINUTES);
+        OffsetDateTime umMinAtras = agora.minusMinutes(1);
 
         return transacoes.stream()
                 .filter(e -> e.getDataHora().isAfter(umMinAtras) &&

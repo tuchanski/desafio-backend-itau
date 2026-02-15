@@ -34,4 +34,8 @@ public class TransacaoService {
         TransacaoStorage.addTransacao(transacao);
     }
 
+    public void clearTransacoes() {
+        TransacaoStorage.clearTransacoes();
+    }
+
 }
