@@ -7,14 +7,10 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @Component
 public class TransacaoStorage {
 
     private static List<Transacao> transacoes = new ArrayList<Transacao>();
-    private static final Logger logger = LoggerFactory.getLogger(TransacaoStorage.class);
 
     public static void addTransacao(Transacao transacao) {
         transacoes.add(transacao);
