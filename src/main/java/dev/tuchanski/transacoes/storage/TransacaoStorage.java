@@ -25,8 +25,8 @@ public class TransacaoStorage {
         OffsetDateTime umMinAtras = agora.minusMinutes(1);
 
         return transacoes.stream()
-                .filter(e -> e.getDataHora().isAfter(umMinAtras) &&
-                        e.getDataHora().isBefore(agora.plusSeconds(1)))
+                .filter(e -> !e.getDataHora().isBefore(umMinAtras) &&
+                        !e.getDataHora().isAfter(agora))
                 .toList();
     }
 
