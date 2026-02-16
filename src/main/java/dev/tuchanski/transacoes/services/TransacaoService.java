@@ -12,8 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
+import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 
 @Service
 @AllArgsConstructor
@@ -51,39 +55,25 @@ public class TransacaoService {
 
     public HashMap<String, Number> getStatsUltimoMinuto() {
         List<Transacao> lastTransacoes = storage.retrieveUltimoMinuto();
-        HashMap<String, Number> stats = new HashMap<>();
+        DoubleSummaryStatistics stats = lastTransacoes.stream().collect(Collectors.summarizingDouble(Transacao::getValor));
 
-        if (lastTransacoes.isEmpty()) {
-            stats.put("count", 0);
-            stats.put("sum", 0);
-            stats.put("avg", 0);
-            stats.put("min", 0);
-            stats.put("max", 0);
-
-            return stats;
+        if (stats.getCount() == 0) {
+            return new HashMap<>(Map.of(
+                    "count", 0,
+                    "sum", stats.getSum(),
+                    "avg", stats.getAverage(),
+                    "min", 0,
+                    "max", 0
+            ));
         }
 
-        int count = 0;
-        float sum = 0;
-        float min = Float.MAX_VALUE;
-        float max = Float.MIN_VALUE;
-
-        for (Transacao t : lastTransacoes) {
-            count++;
-            sum += t.getValor();
-            min = Math.min(min, t.getValor());
-            max = Math.max(max, t.getValor());
-        }
-
-        double avg = sum / count;
-
-        stats.put("count", count);
-        stats.put("sum", sum);
-        stats.put("avg", avg);
-        stats.put("min", min);
-        stats.put("max", max);
-
-        return stats;
+        return new HashMap<>(Map.of(
+                "count", stats.getCount(),
+                "sum", stats.getSum(),
+                "avg", stats.getAverage(),
+                "min", stats.getMin(),
+                "max", stats.getMax()
+        ));
     }
 
 }
