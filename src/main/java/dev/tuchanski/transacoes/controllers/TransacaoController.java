@@ -1,7 +1,7 @@
 package dev.tuchanski.transacoes.controllers;
 
 import dev.tuchanski.transacoes.dtos.TransacaoRequestDTO;
-import dev.tuchanski.transacoes.services.TransacaoService;
+import dev.tuchanski.transacoes.services.impl.TransacaoServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +11,9 @@ import java.util.HashMap;
 @RestController
 public class TransacaoController {
 
-    private final TransacaoService service;
+    private final TransacaoServiceImpl service;
 
-    public TransacaoController(TransacaoService service) {
+    public TransacaoController(TransacaoServiceImpl service) {
         this.service = service;
     }
 
