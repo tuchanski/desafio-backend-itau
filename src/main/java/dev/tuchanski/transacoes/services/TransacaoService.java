@@ -9,6 +9,9 @@ import dev.tuchanski.transacoes.storage.TransacaoStorage;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class TransacaoService {
@@ -37,5 +40,43 @@ public class TransacaoService {
     public void clearTransacoes() {
         TransacaoStorage.clearTransacoes();
     }
+
+    public HashMap<String, Number> getStatsUltimoMinuto() {
+        List<Transacao> lastTransacoes = TransacaoStorage.retrieveUltimoMinuto();
+        HashMap<String, Number> stats = new HashMap<>();
+
+        if (lastTransacoes.isEmpty()) {
+            stats.put("count", 0);
+            stats.put("sum", 0);
+            stats.put("avg", 0);
+            stats.put("min", 0);
+            stats.put("max", 0);
+
+            return stats;
+        }
+
+        int count = 0;
+        float sum = 0;
+        float min = Float.MAX_VALUE;
+        float max = Float.MIN_VALUE;
+
+        for (Transacao t : lastTransacoes) {
+            count++;
+            sum += t.getValor();
+            min = Math.min(min, t.getValor());
+            max = Math.max(max, t.getValor());
+        }
+
+        double avg = sum / count;
+
+        stats.put("count", count);
+        stats.put("sum", sum);
+        stats.put("avg", avg);
+        stats.put("min", min);
+        stats.put("max", max);
+
+        return stats;
+    }
+
 
 }

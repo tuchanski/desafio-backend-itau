@@ -4,10 +4,9 @@ import dev.tuchanski.transacoes.dtos.TransacaoRequestDTO;
 import dev.tuchanski.transacoes.services.TransacaoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 
 @RestController
 public class TransacaoController {
@@ -30,5 +29,9 @@ public class TransacaoController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @GetMapping("/estatistica")
+    public ResponseEntity<HashMap<String, Number>> getStatsUltimoMin() {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getStatsUltimoMinuto());
+    }
 
 }
