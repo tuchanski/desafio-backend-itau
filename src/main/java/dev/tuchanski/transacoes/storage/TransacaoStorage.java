@@ -4,7 +4,6 @@ import dev.tuchanski.transacoes.models.Transacao;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 

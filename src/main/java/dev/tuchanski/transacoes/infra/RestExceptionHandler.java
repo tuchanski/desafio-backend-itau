@@ -1,5 +1,6 @@
 package dev.tuchanski.transacoes.infra;
 
+import dev.tuchanski.transacoes.exceptions.InvalidBodyRequestException;
 import dev.tuchanski.transacoes.exceptions.InvalidDataHoraException;
 import dev.tuchanski.transacoes.exceptions.InvalidValorException;
 import org.springframework.http.HttpStatus;
@@ -21,4 +22,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         RestErrorMessage response = new RestErrorMessage(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
         return ResponseEntity.status(response.getStatus()).body(response);
     }
+
+    @ExceptionHandler(InvalidBodyRequestException.class)
+    private ResponseEntity<RestErrorMessage> invalidBodyRequestException(InvalidBodyRequestException e) {
+        RestErrorMessage response = new RestErrorMessage(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
 }

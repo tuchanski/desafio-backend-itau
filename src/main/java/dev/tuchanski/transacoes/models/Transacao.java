@@ -10,6 +10,6 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @ToString
 public class Transacao {
-    private float valor;
+    private Float valor;
     private OffsetDateTime dataHora;
 }
