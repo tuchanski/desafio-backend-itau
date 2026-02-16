@@ -74,8 +74,8 @@ public class TransacaoServiceImpl implements TransacaoService {
             logger.info("INFO: Sem transações registradas no último minuto.");
             return new HashMap<>(Map.of(
                     "count", 0,
-                    "sum", stats.getSum(),
-                    "avg", stats.getAverage(),
+                    "sum", 0,
+                    "avg", 0,
                     "min", 0,
                     "max", 0
             ));

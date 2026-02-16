@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class TransacaoController {
             @ApiResponse(responseCode = "422", description = "Transação não aceita por não atender 1 ou mais critérios de aceite"),
             @ApiResponse(responseCode = "400", description = "Corpo da requisição vazio")
     })
-    @PostMapping("/transacao")
+    @PostMapping(value = "/transacao", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> create(@Parameter(description = "Dados da transação a ser criada", required = true) @RequestBody TransacaoRequestDTO dto) {
         this.service.createTransacao(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
