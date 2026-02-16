@@ -10,17 +10,17 @@ import java.util.List;
 @Component
 public class TransacaoStorage {
 
-    private static List<Transacao> transacoes = new ArrayList<Transacao>();
+    private final List<Transacao> transacoes = new ArrayList<Transacao>();
 
-    public static void addTransacao(Transacao transacao) {
+    public void addTransacao(Transacao transacao) {
         transacoes.add(transacao);
     }
 
-    public static void clearTransacoes() {
+    public void clearTransacoes() {
         transacoes.clear();
     }
 
-    public static List<Transacao> retrieveUltimoMinuto() {
+    public List<Transacao> retrieveUltimoMinuto() {
         OffsetDateTime agora = OffsetDateTime.now();
         OffsetDateTime umMinAtras = agora.minusMinutes(1);
 

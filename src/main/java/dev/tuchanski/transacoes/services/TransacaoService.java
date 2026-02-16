@@ -22,6 +22,9 @@ public class TransacaoService {
     @Autowired
     private final TransacaoMapper mapper;
 
+    @Autowired
+    private final TransacaoStorage storage;
+
     public void createTransacao(TransacaoRequestDTO dto) {
 
         if (dto.dataHora() == null || dto.valor() == null) {
@@ -39,15 +42,15 @@ public class TransacaoService {
         }
 
         Transacao transacao = mapper.toEntity(dto);
-        TransacaoStorage.addTransacao(transacao);
+        storage.addTransacao(transacao);
     }
 
     public void clearTransacoes() {
-        TransacaoStorage.clearTransacoes();
+        storage.clearTransacoes();
     }
 
     public HashMap<String, Number> getStatsUltimoMinuto() {
-        List<Transacao> lastTransacoes = TransacaoStorage.retrieveUltimoMinuto();
+        List<Transacao> lastTransacoes = storage.retrieveUltimoMinuto();
         HashMap<String, Number> stats = new HashMap<>();
 
         if (lastTransacoes.isEmpty()) {
