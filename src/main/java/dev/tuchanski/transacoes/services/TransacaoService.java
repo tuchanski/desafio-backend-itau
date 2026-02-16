@@ -7,6 +7,8 @@ import dev.tuchanski.transacoes.exceptions.InvalidValorException;
 import dev.tuchanski.transacoes.mappers.TransacaoMapper;
 import dev.tuchanski.transacoes.models.Transacao;
 import dev.tuchanski.transacoes.storage.TransacaoStorage;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
@@ -14,13 +16,11 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class TransacaoService {
 
+    @Autowired
     private final TransacaoMapper mapper;
-
-    public TransacaoService(TransacaoMapper mapper) {
-        this.mapper = mapper;
-    }
 
     public void createTransacao(TransacaoRequestDTO dto) {
 
