@@ -1,6 +1,6 @@
 # Desafio Backend Itaú
 
-Este é um projeto feito com base no desafio proposto pelo Itaú alguns anos atrás. As requisições técnicas podem ser visualizadas através [desse repositório.](https://github.com/rafaellins-itau/desafio-itau-vaga-99-junior) Em suma, o desafio propõe a criação de uma API Restful que recebe Transações, retorna estatísticas e que carregue dados em memória.
+Este é um projeto feito com base no desafio proposto pelo Itaú alguns anos atrás. As requisições técnicas podem ser visualizadas através [desse repositório.](https://github.com/rafaellins-itau/desafio-itau-vaga-99-junior) Em suma, o desafio propõe a criação de uma API Restful que recebe transações, retorna estatísticas e carrega dados em memória.
 
 ## 1. Tech Stack
 
@@ -65,4 +65,4 @@ http://localhost:8080/swagger-ui/index.html
 
 ## 6. Autor
 
-Feito por [Guilherme Tuchanski](https://github.com/tuchanski) com fins educacionais.
+Feito por [Guilherme Tuchanski](https://github.com/tuchanski) 🫰
