@@ -1,0 +1,102 @@
+{
+  "info": {
+    "_postman_id": "b3624c92-2957-4a20-a53b-20b361ba240c",
+    "name": "Desafio Backend Itaú",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31206383"
+  },
+  "item": [
+    {
+      "name": "Create Transacao",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"valor\": 123.45,\n    \"dataHora\": \"2020-08-07T12:34:56.789-03:00\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/transacao",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "transacao"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete Cache",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/transacao",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "transacao"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Stats",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/estatistica?tempoEmMinutos=3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "estatistica"
+          ],
+          "query": [
+            {
+              "key": "tempoEmMinutos",
+              "value": "3"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/actuator/health",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "actuator",
+            "health"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
