@@ -22,7 +22,7 @@ class TransacaoStorageTest {
     void deveAdicionarTransacao() {
         Transacao transacao = new Transacao(5.50F, OffsetDateTime.now());
         storage.addTransacao(transacao);
-        assertFalse(storage.retrieveUltimoMinuto().isEmpty());
+        assertFalse(storage.retrieveStats(1).isEmpty());
     }
 
     @Test
@@ -35,7 +35,7 @@ class TransacaoStorageTest {
 
         storage.clearTransacoes();
 
-        assertTrue(storage.retrieveUltimoMinuto().isEmpty());
+        assertTrue(storage.retrieveStats(1).isEmpty());
     }
 
     @Test
@@ -46,7 +46,7 @@ class TransacaoStorageTest {
         Transacao transacao2 = new Transacao(5.50F, OffsetDateTime.now().minusMinutes(20));
         storage.addTransacao(transacao2);
 
-        assertEquals(1, storage.retrieveUltimoMinuto().size());
+        assertEquals(1, storage.retrieveStats(1).size());
     }
 
 }

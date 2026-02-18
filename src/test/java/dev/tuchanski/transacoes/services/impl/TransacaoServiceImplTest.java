@@ -35,7 +35,7 @@ class TransacaoServiceImplTest {
         TransacaoRequestDTO dto = new TransacaoRequestDTO(60.90F, OffsetDateTime.now());
         service.createTransacao(dto);
 
-        HashMap<String, Number> stats = service.getStatsUltimoMinuto();
+        HashMap<String, Number> stats = service.getStats(1);
 
         assertEquals(1L, stats.get("count"));
     }
@@ -54,7 +54,7 @@ class TransacaoServiceImplTest {
 
         service.clearTransacoes();
 
-        HashMap<String, Number> stats = service.getStatsUltimoMinuto();
+        HashMap<String, Number> stats = service.getStats(1);
 
         assertEquals(0, stats.get("count"));
     }
@@ -71,7 +71,7 @@ class TransacaoServiceImplTest {
         TransacaoRequestDTO dto3 = new TransacaoRequestDTO(40.90F, OffsetDateTime.now().minusSeconds(20));
         service.createTransacao(dto3);
 
-        HashMap<String, Number> stats = service.getStatsUltimoMinuto();
+        HashMap<String, Number> stats = service.getStats(1);
 
         assertEquals(3L, stats.get("count"));
     }
@@ -109,7 +109,7 @@ class TransacaoServiceImplTest {
         TransacaoRequestDTO dto3 = new TransacaoRequestDTO(40.90F, OffsetDateTime.now().minusSeconds(20));
         service.createTransacao(dto3);
 
-        HashMap<String, Number> stats = service.getStatsUltimoMinuto();
+        HashMap<String, Number> stats = service.getStats(1);
 
         float avg = (dto.valor() + dto2.valor() + dto3.valor()) / 3;
 
@@ -122,7 +122,7 @@ class TransacaoServiceImplTest {
         OffsetDateTime t = OffsetDateTime.now().minusSeconds(60);
         service.createTransacao(new TransacaoRequestDTO(10F, t));
 
-        HashMap<String, Number> stats = service.getStatsUltimoMinuto();
+        HashMap<String, Number> stats = service.getStats(1);
 
         assertEquals(0, stats.get("count"));
     }
@@ -132,7 +132,7 @@ class TransacaoServiceImplTest {
     void borda61sNaoEntra() {
         service.createTransacao(new TransacaoRequestDTO(10F, OffsetDateTime.now().minusSeconds(61)));
 
-        HashMap<String, Number> stats = service.getStatsUltimoMinuto();
+        HashMap<String, Number> stats = service.getStats(1);
 
         assertEquals(0, stats.get("count"));
     }
@@ -142,7 +142,7 @@ class TransacaoServiceImplTest {
     void statsVazio() {
         service.clearTransacoes();
 
-        HashMap<String, Number> stats = service.getStatsUltimoMinuto();
+        HashMap<String, Number> stats = service.getStats(1);
 
         assertEquals(0, stats.get("count"));
         assertEquals(0F, stats.get("sum").floatValue());
@@ -158,7 +158,7 @@ class TransacaoServiceImplTest {
         service.createTransacao(new TransacaoRequestDTO(50.90F, OffsetDateTime.now()));
         service.createTransacao(new TransacaoRequestDTO(40.90F, OffsetDateTime.now().minusSeconds(20)));
 
-        HashMap<String, Number> stats = service.getStatsUltimoMinuto();
+        HashMap<String, Number> stats = service.getStats(1);
 
         assertEquals(40.90F, stats.get("min").floatValue(), 0.0001);
         assertEquals(60.90F, stats.get("max").floatValue(), 0.0001);
@@ -170,6 +170,6 @@ class TransacaoServiceImplTest {
         service.clearTransacoes();
         service.clearTransacoes();
 
-        assertEquals(0, service.getStatsUltimoMinuto().get("count"));
+        assertEquals(0, service.getStats(1).get("count"));
     }
 }
