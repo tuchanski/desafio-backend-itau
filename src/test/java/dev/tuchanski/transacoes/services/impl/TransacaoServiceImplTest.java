@@ -116,4 +116,60 @@ class TransacaoServiceImplTest {
         assertEquals(String.format("%.2f", avg), String.format("%.2f", stats.get("avg")));
     }
 
+    @Test
+    @DisplayName("Borda: transação exatamente 60s atrás (defina se entra ou não)")
+    void bordaExatamente60s() {
+        OffsetDateTime t = OffsetDateTime.now().minusSeconds(60);
+        service.createTransacao(new TransacaoRequestDTO(10F, t));
+
+        HashMap<String, Number> stats = service.getStatsUltimoMinuto();
+
+        assertEquals(0, stats.get("count"));
+    }
+
+    @Test
+    @DisplayName("Borda: transação 61s atrás não entra")
+    void borda61sNaoEntra() {
+        service.createTransacao(new TransacaoRequestDTO(10F, OffsetDateTime.now().minusSeconds(61)));
+
+        HashMap<String, Number> stats = service.getStatsUltimoMinuto();
+
+        assertEquals(0, stats.get("count"));
+    }
+
+    @Test
+    @DisplayName("Stats vazio não explode e retorna zeros/valores esperados")
+    void statsVazio() {
+        service.clearTransacoes();
+
+        HashMap<String, Number> stats = service.getStatsUltimoMinuto();
+
+        assertEquals(0, stats.get("count"));
+        assertEquals(0F, stats.get("sum").floatValue());
+        assertEquals(0F, stats.get("avg").floatValue());
+        assertEquals(0F, stats.get("min").floatValue());
+        assertEquals(0F, stats.get("max").floatValue());
+    }
+
+    @Test
+    @DisplayName("Stats retorna min e max corretos no último minuto")
+    void statsMinMax() {
+        service.createTransacao(new TransacaoRequestDTO(60.90F, OffsetDateTime.now().minusSeconds(10)));
+        service.createTransacao(new TransacaoRequestDTO(50.90F, OffsetDateTime.now()));
+        service.createTransacao(new TransacaoRequestDTO(40.90F, OffsetDateTime.now().minusSeconds(20)));
+
+        HashMap<String, Number> stats = service.getStatsUltimoMinuto();
+
+        assertEquals(40.90F, stats.get("min").floatValue(), 0.0001);
+        assertEquals(60.90F, stats.get("max").floatValue(), 0.0001);
+    }
+
+    @Test
+    @DisplayName("Clear é idempotente")
+    void clearIdempotente() {
+        service.clearTransacoes();
+        service.clearTransacoes();
+
+        assertEquals(0, service.getStatsUltimoMinuto().get("count"));
+    }
 }
