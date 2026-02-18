@@ -61,7 +61,7 @@ public class TransacaoController {
     public ResponseEntity<HashMap<String, Number>> getStats(@Parameter(
             description = "Intervalo de tempo (em minutos) para calcular as estatísticas. Se não informado, usa 1.",
             schema = @Schema(defaultValue = "1", minimum = "1")
-    ) @RequestParam(required = false, defaultValue = "1") Integer tempoEmMinutos) {
+    ) @RequestParam(required = false, defaultValue = "1") int tempoEmMinutos) {
         return ResponseEntity.status(HttpStatus.OK).body(service.getStats(tempoEmMinutos));
     }
 
