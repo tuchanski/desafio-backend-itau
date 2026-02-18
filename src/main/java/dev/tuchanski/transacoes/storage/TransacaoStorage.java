@@ -22,10 +22,10 @@ public class TransacaoStorage {
 
     public List<Transacao> retrieveStats(int tempoEmMinutos) {
         OffsetDateTime agora = OffsetDateTime.now();
-        OffsetDateTime umMinAtras = agora.minusMinutes(tempoEmMinutos);
+        OffsetDateTime intervaloInicio = agora.minusMinutes(tempoEmMinutos);
 
         return transacoes.stream()
-                .filter(e -> !e.getDataHora().isBefore(umMinAtras) &&
+                .filter(e -> !e.getDataHora().isBefore(intervaloInicio) &&
                         !e.getDataHora().isAfter(agora))
                 .toList();
     }
