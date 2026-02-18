@@ -28,11 +28,7 @@ import org.slf4j.LoggerFactory;
 public class TransacaoServiceImpl implements TransacaoService {
 
     private final Logger logger = LoggerFactory.getLogger(TransacaoServiceImpl.class);
-
-    @Autowired
     private final TransacaoMapper mapper;
-
-    @Autowired
     private final TransacaoStorage storage;
 
     public void createTransacao(TransacaoRequestDTO dto) {
