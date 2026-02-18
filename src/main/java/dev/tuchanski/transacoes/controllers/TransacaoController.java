@@ -48,18 +48,23 @@ public class TransacaoController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @Operation(description = "Operação para recuperar estatísticas das transações criadas no último minuto")
-    @ApiResponses(
-            @ApiResponse(responseCode = "200", description = "Estatísticas recuperadas com sucesso", content = @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(
-                            example = "{ \"count\": 0, \"sum\": 0, \"min\": 0, \"avg\": 0, \"max\": 0 }"
-                    )
-            ))
+    @Operation(description = "Operação para recuperar estatísticas das transações criadas no intervalo desejado em minutos")
+    @ApiResponses({
+                    @ApiResponse(responseCode = "200", description = "Estatísticas recuperadas com sucesso", content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    example = "{ \"count\": 0, \"sum\": 0, \"min\": 0, \"avg\": 0, \"max\": 0 }"
+                            )
+                    )),
+                    @ApiResponse(responseCode = "400", description = "Intervalo em minutos informado menor ou igual a 0")
+            }
     )
     @GetMapping("/estatistica")
-    public ResponseEntity<HashMap<String, Number>> getStatsUltimoMin() {
-        return ResponseEntity.status(HttpStatus.OK).body(service.getStatsUltimoMinuto());
+    public ResponseEntity<HashMap<String, Number>> getStats(@Parameter(
+            description = "Intervalo de tempo (em minutos) para calcular as estatísticas. Se não informado, usa 1.",
+            schema = @Schema(defaultValue = "1", minimum = "1")
+    ) @RequestParam(required = false, defaultValue = "1") Integer tempoEmMinutos) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getStats(tempoEmMinutos));
     }
 
 }

@@ -7,5 +7,5 @@ import java.util.HashMap;
 public interface TransacaoService {
     void createTransacao(TransacaoRequestDTO dto);
     void clearTransacoes();
-    HashMap<String, Number> getStatsUltimoMinuto();
+    HashMap<String, Number> getStats(int tempoEmMinutos);
 }

@@ -3,6 +3,7 @@ package dev.tuchanski.transacoes.services.impl;
 import dev.tuchanski.transacoes.dtos.TransacaoRequestDTO;
 import dev.tuchanski.transacoes.exceptions.InvalidBodyRequestException;
 import dev.tuchanski.transacoes.exceptions.InvalidDataHoraException;
+import dev.tuchanski.transacoes.exceptions.InvalidPeriodoDeTempoException;
 import dev.tuchanski.transacoes.exceptions.InvalidValorException;
 import dev.tuchanski.transacoes.mappers.TransacaoMapper;
 import dev.tuchanski.transacoes.models.Transacao;
@@ -65,13 +66,19 @@ public class TransacaoServiceImpl implements TransacaoService {
         storage.clearTransacoes();
     }
 
-    public HashMap<String, Number> getStatsUltimoMinuto() {
+    public HashMap<String, Number> getStats(int tempoEmMinutos) {
         logger.info("INFO: Requisição de Stats recebida.");
-        List<Transacao> lastTransacoes = storage.retrieveUltimoMinuto();
+
+        if (tempoEmMinutos <= 0) {
+            throw new InvalidPeriodoDeTempoException("O tempo informado deve ser maior que 0.");
+        }
+
+        logger.info("Recuperando stats em minutos: {}", tempoEmMinutos);
+        List<Transacao> lastTransacoes = storage.retrieveStats(tempoEmMinutos);
         DoubleSummaryStatistics stats = lastTransacoes.stream().collect(Collectors.summarizingDouble(Transacao::getValor));
 
         if (stats.getCount() == 0) {
-            logger.info("INFO: Sem transações registradas no último minuto.");
+            logger.info("INFO: Sem transações registradas no intervalo.");
             return new HashMap<>(Map.of(
                     "count", 0,
                     "sum", 0,
@@ -81,7 +88,7 @@ public class TransacaoServiceImpl implements TransacaoService {
             ));
         }
 
-        logger.info("INFO: Stats das transações efetuadas no último minuto recuperadas com sucesso.");
+        logger.info("INFO: Stats das transações efetuadas no intervalo recuperadas com sucesso.");
         return new HashMap<>(Map.of(
                 "count", stats.getCount(),
                 "sum", stats.getSum(),

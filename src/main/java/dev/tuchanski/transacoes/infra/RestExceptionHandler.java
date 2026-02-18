@@ -2,6 +2,7 @@ package dev.tuchanski.transacoes.infra;
 
 import dev.tuchanski.transacoes.exceptions.InvalidBodyRequestException;
 import dev.tuchanski.transacoes.exceptions.InvalidDataHoraException;
+import dev.tuchanski.transacoes.exceptions.InvalidPeriodoDeTempoException;
 import dev.tuchanski.transacoes.exceptions.InvalidValorException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(InvalidBodyRequestException.class)
     private ResponseEntity<RestErrorMessage> invalidBodyRequestException(InvalidBodyRequestException e) {
         RestErrorMessage response = new RestErrorMessage(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
+        return ResponseEntity.status(response.getStatus()).body(response);
+    }
+
+    @ExceptionHandler(InvalidPeriodoDeTempoException.class)
+    private ResponseEntity<RestErrorMessage> invalidPeriodoDeTempoException(InvalidPeriodoDeTempoException e) {
+        RestErrorMessage response = new RestErrorMessage(HttpStatus.BAD_REQUEST, e.getMessage());
         return ResponseEntity.status(response.getStatus()).body(response);
     }
 

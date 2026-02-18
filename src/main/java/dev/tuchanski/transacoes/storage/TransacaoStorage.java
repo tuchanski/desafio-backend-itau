@@ -20,9 +20,9 @@ public class TransacaoStorage {
         transacoes.clear();
     }
 
-    public List<Transacao> retrieveUltimoMinuto() {
+    public List<Transacao> retrieveStats(int tempoEmMinutos) {
         OffsetDateTime agora = OffsetDateTime.now();
-        OffsetDateTime umMinAtras = agora.minusMinutes(1);
+        OffsetDateTime umMinAtras = agora.minusMinutes(tempoEmMinutos);
 
         return transacoes.stream()
                 .filter(e -> !e.getDataHora().isBefore(umMinAtras) &&
