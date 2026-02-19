@@ -33,7 +33,7 @@ Escolhi um modelo de arquitetura em camadas para desenvolver o projeto:
 | ------ | ------------------ | ----------------------------------------------------------------------------------------------------- |
 | POST   | `/transacao`       | Cria uma nova transação.                                                                              |
 | DELETE | `/transacao`       | Limpa o armazenamento em memória.                                                                     |
-| GET    | `/estatistica`     | Recupera estatísticas das transações criadas no último minuto. **Header opcional:** `tempoEmMinutos`. |
+| GET    | `/estatistica`     | Recupera estatísticas das transações criadas no último minuto. **Query String opcional:** `tempoEmMinutos`. |
 | GET    | `/actuator/health` | Retorna o status de saúde da aplicação.                                                               |
 
 ## 5. Como Executar
