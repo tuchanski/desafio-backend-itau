@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 @Tag(name = "Transações", description = "Endpoints para criação e análise de transações")
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TransacaoController {
 
     private final TransacaoServiceImpl service;
@@ -32,7 +32,7 @@ public class TransacaoController {
     })
     @PostMapping(value = "/transacao", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> create(@Parameter(description = "Dados da transação a ser criada", required = true) @RequestBody TransacaoRequestDTO dto) {
-        this.service.createTransacao(dto);
+        service.createTransacao(dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -42,7 +42,7 @@ public class TransacaoController {
     })
     @DeleteMapping("/transacao")
     public ResponseEntity<Void> deleteAll() {
-        this.service.clearTransacoes();
+        service.clearTransacoes();
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 

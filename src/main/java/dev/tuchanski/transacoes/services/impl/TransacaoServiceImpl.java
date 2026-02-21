@@ -9,10 +9,11 @@ import dev.tuchanski.transacoes.mappers.TransacaoMapper;
 import dev.tuchanski.transacoes.models.Transacao;
 import dev.tuchanski.transacoes.services.TransacaoService;
 import dev.tuchanski.transacoes.storage.TransacaoStorage;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.OffsetDateTime;
 import java.util.DoubleSummaryStatistics;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TransacaoServiceImpl implements TransacaoService {
 
     private final Logger logger = LoggerFactory.getLogger(TransacaoServiceImpl.class);
@@ -87,11 +88,16 @@ public class TransacaoServiceImpl implements TransacaoService {
         logger.info("INFO: Stats das transações efetuadas no intervalo recuperadas com sucesso.");
         return new HashMap<>(Map.of(
                 "count", stats.getCount(),
-                "sum", stats.getSum(),
-                "avg", stats.getAverage(),
-                "min", stats.getMin(),
-                "max", stats.getMax()
+                "sum", setScale(stats.getSum()),
+                "avg", setScale(stats.getAverage()),
+                "min", setScale(stats.getMin()),
+                "max", setScale(stats.getMax())
         ));
+    }
+
+    private static BigDecimal setScale(Number number) {
+        if (number == null) return BigDecimal.ZERO.setScale(2);
+        return new BigDecimal(number.toString()).setScale(2, RoundingMode.HALF_UP);
     }
 
 }
