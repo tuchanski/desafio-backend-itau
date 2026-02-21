@@ -10,8 +10,6 @@ Este é um projeto feito com base no desafio proposto pelo Itaú alguns anos atr
 
 ## 2. Pré-requisitos
 
-- Java JDK 21
-- Maven
 - Docker
 
 ## 3. Arquitetura
@@ -44,22 +42,17 @@ git clone https://github.com/tuchanski/desafio-backend-itau.git
 cd desafio-backend-itau
 ```
 
-### 2. Gere o JAR da aplicação
-```bash
-mvn clean package
-```
-
-### 3. Builde a imagem Docker
+### 2. Builde a imagem Docker
 ```bash
 docker build -t transacoes .
 ```
 
-### 4. Rode o container
+### 3. Rode o container
 ```bash
-docker run -p 8080:8080 transacoes
+docker run --rm -p 8080:8080 --name transacoes transacoes
 ```
 
-### 5. Agora, acesse a documentação da API no navegador:
+### 4. Agora, acesse a documentação da API no navegador:
 ```bash
 http://localhost:8080/swagger-ui/index.html
 ```
